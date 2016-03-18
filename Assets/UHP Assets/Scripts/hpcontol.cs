@@ -3,14 +3,14 @@ using System.Collections;
 
 public class hpcontol : MonoBehaviour {
     CharacterController controller;
-    Animator animator;
+   // Animator animator;
     public bool isEnable;
 
     public float speed = 5;
 	// Use this for initialization
 	void Start () {
         controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -53,11 +53,13 @@ public class hpcontol : MonoBehaviour {
         }
     }
 
-    void Activate(){
+   public void Activate(){
         isEnable = true;
+       // Debug.Log("I am on");
     }
 
-    void Deactivate(){
+    public void Disactivate(){
         isEnable = false;
+       // Debug.Log("I am off");
     }
 }
