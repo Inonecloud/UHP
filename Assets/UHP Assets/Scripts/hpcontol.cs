@@ -4,6 +4,7 @@ using System.Collections;
 public class hpcontol : MonoBehaviour {
     CharacterController controller;
     Animator animator;
+    public bool isEnable;
 
     public float speed = 5;
 	// Use this for initialization
@@ -14,25 +15,27 @@ public class hpcontol : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        // movement controll
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-        if (x != 0)
-            //animator.SetBool(); // Rotation animation
-            transform.Rotate(0f, x * speed * 3, 0f);
-        if (z != 0)
+        if (isEnable)
         {
-            //animator.SetBool();  // Skating animation
-            Vector3 dir = transform.TransformDirection(new Vector3(0f, 0f, z * speed * Time.deltaTime));
-            controller.Move(dir);
+            // movement controll
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
+            if (x != 0)
+                //animator.SetBool(); // Rotation animation
+                transform.Rotate(0f, x * speed * 3, 0f);
+            if (z != 0)
+            {
+                //animator.SetBool();  // Skating animation
+                Vector3 dir = transform.TransformDirection(new Vector3(0f, 0f, z * speed * Time.deltaTime));
+                controller.Move(dir);
+            }
+            /*
+            else
+            {
+                animator.SetBool(); // Standing animation
+            }
+            */
         }
-        /*
-        else
-        {
-            animator.SetBool(); // Standing animation
-        }
-        */
             
 	}
 
@@ -48,5 +51,13 @@ public class hpcontol : MonoBehaviour {
                 body.AddForce(hit.moveDirection * 100f); //Shoot
             }
         }
+    }
+
+    void Activate(){
+        isEnable = true;
+    }
+
+    void Deactivate(){
+        isEnable = false;
     }
 }
