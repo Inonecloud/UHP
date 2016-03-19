@@ -3,14 +3,14 @@ using System.Collections;
 
 public class hpcontol : MonoBehaviour {
     CharacterController controller;
-   // Animator animator;
+    //Animator anim;
     public bool isEnable;
 
     public float speed = 5;
 	// Use this for initialization
 	void Start () {
         controller = GetComponent<CharacterController>();
-        //animator = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -21,13 +21,13 @@ public class hpcontol : MonoBehaviour {
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
             if (x != 0)
-                //animator.SetBool(); // Rotation animation
+                //anim.SetBool(); // Rotation animation
                 transform.Rotate(0f, x * speed * 3, 0f);
             if (z != 0)
             {
-                //animator.SetBool();  // Skating animation
                 Vector3 dir = transform.TransformDirection(new Vector3(0f, 0f, z * speed * Time.deltaTime));
                 controller.Move(dir);
+              // anim.SetFloat("Speed", x);  // Skating animation
             }
             /*
             else
