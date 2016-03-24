@@ -54,7 +54,7 @@ public class SwitchPlayer : MonoBehaviour
             Debug.Log("Ативировали " + (counter));
             
             counter = -1; //Ad-hoc
-           // counter = 0;
+            //counter = 0;
             Debug.Log(counter);
         }
         else {
@@ -67,6 +67,7 @@ public class SwitchPlayer : MonoBehaviour
         //player[counter].GetComponent<hpcontol>().Activate();
         //Debug.Log("Ативировали " + (counter));
         //Debug.Log("Length " + player.Length);
+
     }
 }
 

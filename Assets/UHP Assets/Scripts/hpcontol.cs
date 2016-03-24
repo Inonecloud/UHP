@@ -4,7 +4,8 @@ using System.Collections;
 public class hpcontol : MonoBehaviour {
     CharacterController controller;
     //Animator anim;
-    public bool isEnable;
+    [SerializeField]
+    private bool isEnable;
 
     public float speed = 5;
 	// Use this for initialization
@@ -14,7 +15,7 @@ public class hpcontol : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         if (isEnable)
         {
             // movement controll
@@ -22,7 +23,7 @@ public class hpcontol : MonoBehaviour {
             float z = Input.GetAxis("Vertical");
             if (x != 0)
                 //anim.SetBool(); // Rotation animation
-                transform.Rotate(0f, x * speed * 3, 0f);
+                transform.Rotate(0f, x * speed * 2, 0f);
             if (z != 0)
             {
                 Vector3 dir = transform.TransformDirection(new Vector3(0f, 0f, z * speed * Time.deltaTime));
