@@ -12,12 +12,11 @@ public class AIPlayer
     // ===================================================
     // AI player thinking procedures
     // ===================================================
-    public static PARAM ProcessAI(PARAM param, AI_PLAYER player)
+    public static void ProcessAI(ref PARAM param, ref AI_PLAYER player)
     {
         // just go
         float r = Physics.Angle(param.x, param.y, player.puck.x, player.puck.y);
         float d = Physics.Distance(param.x, param.y, player.puck.x, player.puck.y);
-        //if (pos.dir != r) pos.dir += (r-pos.dir)*0.4f ;
         param.dir = r;
         param.h = param.dir;
 
@@ -26,10 +25,6 @@ public class AIPlayer
         if (player.side == -1 && param.x < -5 || player.side == 1 && param.x > 5) param.speed *= 0.96f;
         if (param.speed < 0.1f) param.speed = -0.1f;
 
-
-
-
-        return param;
     }
 
 
@@ -41,7 +36,7 @@ public class AIPlayer
     // ===================================================
     // AI puck control
     // ===================================================
-    public static PARAM PuckControl(PARAM param, AI_PLAYER player, PARAM puck)
+    public static void PuckControl(ref PARAM param, ref AI_PLAYER player, ref PARAM puck)
     {
 
         float r = Physics.Angle(param.x, param.y, puck.x, puck.y);
@@ -61,7 +56,6 @@ public class AIPlayer
         }
 
 
-        return puck;
     }
 
 

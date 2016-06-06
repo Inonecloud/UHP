@@ -94,3 +94,9 @@ public struct AI_PLAYER
     public PARAM ot_keeper; // goal keeper
 
 };
+
+
+
+ 
+
+

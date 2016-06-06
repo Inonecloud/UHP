@@ -55,15 +55,7 @@ public class CPuck
 
     public void Process()
     {
-        if (param.alt < 0.01)
-        {
-            param.speed = param.speed * 0.995f;
-            param.p *= 0.45f;
-            param.b *= 0.45f;
-            param.h *= 0.8f;
-        }
-
-        param = Physics.Move(param);
+        Physics.PuckPhysics(ref param);
     }
 
 
@@ -77,12 +69,12 @@ public class CPuck
         AudioHit.pitch = 0.8f + 0.4f * Random.value;
         AudioIce.pitch = 0.8f + 0.4f * Random.value;
         // play sounds
-        if (param.collision == 1) AudioHit.PlayOneShot(snd_board_0, param.speed / 30.0f);
-        if (param.collision == 2 && param.speed <= 20) AudioHit.PlayOneShot(snd_board_1, param.speed / 30.0f);
-        if (param.collision == 2 && param.speed > 20) AudioHit.PlayOneShot(snd_board_2, param.speed / 30.0f);
-        if (param.collision == 10) AudioHit.PlayOneShot(snd_glass, param.speed / 30.0f);
-        if (param.collision == 99) AudioIce.PlayOneShot(snd_ice, param.vv / 30.0f);
-        if (param.collision == 98) AudioIce.PlayOneShot(snd_pole, param.speed / 30.0f);
+        if (param.collision == Collision.BOARD) AudioHit.PlayOneShot(snd_board_0, param.speed / 30.0f);
+        if (param.collision == Collision.BOARD_HIT && param.speed <= 20) AudioHit.PlayOneShot(snd_board_1, param.speed / 30.0f);
+        if (param.collision == Collision.BOARD_HIT && param.speed > 20) AudioHit.PlayOneShot(snd_board_2, param.speed / 30.0f);
+        if (param.collision == Collision.GLASS) AudioHit.PlayOneShot(snd_glass, param.speed / 30.0f);
+        if (param.collision == Collision.ICE) AudioIce.PlayOneShot(snd_ice, param.vv / 30.0f);
+        if (param.collision == Collision.POLE) AudioIce.PlayOneShot(snd_pole, param.speed / 30.0f);
 
         PuckObj.transform.position = new Vector3(param.x, param.alt + 0.01f, param.y);
         PuckObj.transform.eulerAngles = new Vector3(param.p, param.h, param.b);

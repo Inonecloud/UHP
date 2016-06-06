@@ -23,7 +23,7 @@ public class CCoreGame
 
 
     // Use this for initialization
-    public string Init()
+    public void Init()
     {
         Core.mode++;
 
@@ -66,7 +66,6 @@ public class CCoreGame
         NetGuest.param.h = 90;
 
 
-        return "";
     }
 
 
@@ -79,15 +78,12 @@ public class CCoreGame
     public void Process()
     {
 
-
         // random shot
         if (Time.frameCount % 200 == 1)
         {
-
             //Puck.param.speed = 1f + 5f;
             //Puck.param.dir = 10f * Random.value - 5 + Physics.Angle(Puck.param.x, Puck.param.y, NetHome.param.x, NetHome.param.y);
             //Puck.param.vv = 10f * Random.value;
-
             //Puck.pos.dir = 45f;
         }
 
@@ -95,16 +91,14 @@ public class CCoreGame
 
 
 
-
-
-
-        //******************************
-        // process all object calculations
+        //=====================================
+        // process all objects calculations
+        //=====================================
         Puck.Process();
         for (int i = 0; i < 1; i++)
         {
-            Puck.param = PlayerHome[i].Process( Puck.param, NetHome.param, NetGuest.param );
-            Puck.param = PlayerGuest[i].Process( Puck.param, NetHome.param, NetGuest.param );
+            PlayerHome[i].Process( ref Puck.param, NetHome.param, NetGuest.param );
+            PlayerGuest[i].Process( ref Puck.param, NetHome.param, NetGuest.param );
         }
 
 
@@ -112,35 +106,21 @@ public class CCoreGame
 
 
 
-        //******************************
-        // check collisions with sides
-        Puck.param = Arena.CheckBoardCollision(Puck.param,0.5f);
-        Puck.param = NetHome.CheckNetCollision(Puck.param, 0.2f);
-        Puck.param = NetGuest.CheckNetCollision(Puck.param, 0.2f);
+        //=====================================
+        // check collisions 
+        //=====================================
+        Collision.CheckBoardCollision( ref Arena.data, ref Puck.param, 0.5f);
+        Collision.CheckNetCollision( ref NetHome.param,ref Puck.param, 0.2f);
+        Collision.CheckNetCollision( ref NetGuest.param, ref Puck.param, 0.2f);
 
 
-        // check collisions with people
-        //float d = Vector2.Distance(new Vector2(Puck.param.x, Puck.param.y), new Vector2(Me.transform.position.x, Me.transform.position.z));
-        //if (d < 0.9)
-        //{
-        //    Puck.pos.speed = 5f + 1f * Random.value;
-        //    Puck.pos.dir = Me.transform.eulerAngles.y;
-        //    // hit
-        //    if (Puck.pos.x > 12 || Puck.pos.x < -12)
-        //    {
-        //        Puck.pos.speed = 1f + 20f * Random.value;
-        //        Puck.pos.vv = 10f * Random.value;
-        //        Puck.pos.dir = Me.transform.eulerAngles.y;
-        //    }
-        //}
+ 
 
 
 
-
-
-
-        //******************************
-        // position objects in the scene
+        //=====================================
+        // process reaction and position objects in the scene
+        //=====================================
         Puck.Post();
         NetHome.Post();
         NetGuest.Post();
@@ -153,8 +133,9 @@ public class CCoreGame
 
 
 
-        //******************************
+        //=====================================
         // camera
+        //=====================================
         Camera.main.transform.LookAt(Puck.PuckObj.transform);
 
 
@@ -170,7 +151,7 @@ public class CCoreGame
     {
         //float d = Vector2.Distance(new Vector2(Puck.pos.x, Puck.pos.y), new Vector2(Me.transform.position.x, Me.transform.position.z));
         //float r = Vector2.Angle(new Vector2(Puck.pos.x, Puck.pos.y), new Vector2(Me.transform.position.x, Me.transform.position.z));
-        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), (Puck.param.speed.ToString()) );
+        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "DEBUG "+(PlayerHome[0].param.dir.ToString()) );
     }
 
 }

@@ -6,19 +6,25 @@ using System.Collections;
 public class Core : MonoBehaviour {
 
 
-	// global objects
+	// this is our butiful skin 
     public GUISkin skin;
 
+    // currently active mode
     public static int mode;
+    // mode values
+    public const int MODE_MAIN_MENU = 0;
+    public const int MODE_GAME_INIT = 1;
+    public const int MODE_GAME_PLAY = 2;
+
     
-    CCoreMenu Menu;
-    CCoreGame Game;
+    CCoreMenu Menu; // main menu class
+    CCoreGame Game; // gameplay class
     
 
 
 	// Use this for initialization
 	void Start () {
-        mode = 1;
+        mode = MODE_GAME_INIT; // ******** temporary for testing ************
         Menu = new CCoreMenu();
         Game = new CCoreGame();
     }
@@ -35,11 +41,11 @@ public class Core : MonoBehaviour {
         // stop executing if we have experienced an error somewhere
         if (CoreError.Error != "") return; 
 
-        if (mode == 0) Menu.Process(); 
+        if (mode == MODE_MAIN_MENU) Menu.Process(); 
  
         // load and process normal gameplay
-        if (mode == 1) Game.Init(); 
-        if (mode == 2) Game.Process();
+        if (mode == MODE_GAME_INIT) Game.Init(); 
+        if (mode == MODE_GAME_PLAY) Game.Process();
 
     }
 
@@ -52,9 +58,9 @@ public class Core : MonoBehaviour {
     void OnGUI()
     {
         GUI.skin = skin;
-        if (CoreError.Error != "") CoreError.Show();
-        if (mode == 0) Menu.OnGUI();
-        if (mode == 2) Game.OnGUI();
+        if (CoreError.Error != "") CoreError.Show(); // show error dialog
+        if (mode == MODE_MAIN_MENU) Menu.OnGUI();
+        if (mode == MODE_GAME_PLAY) Game.OnGUI();
     }
 
 }
