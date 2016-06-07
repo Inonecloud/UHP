@@ -43,6 +43,27 @@ public class Physics
 
 
 
+
+
+    //============================================
+    // net movement procedures 
+    //============================================
+    public static void NetPhysics(ref PARAM param)
+    {
+        param.speed *= 0.98f; // reduce speed
+        param.rh *= 0.9f; // reduce rotation
+        if( param.p>0 ) param.rp -= 0.5f; // dont jump too high
+        if (param.p < 0) { param.p = 0; param.rp = 0f; } // stop jump rotation
+        Physics.Move(ref param);
+    }
+
+
+
+
+
+
+
+
     //============================================
     // general move suitable for all earth objects 
     //============================================
@@ -57,6 +78,7 @@ public class Physics
         param.alt += param.vv * Time.deltaTime;
         param.p += param.rp * Time.deltaTime;
         param.b += param.rb * Time.deltaTime;
+        param.h += param.rh * Time.deltaTime;
 
         return param;
     }
@@ -97,6 +119,14 @@ public class Physics
         return dir;
     }
 
+    // find bearing difference -180 to 180
+    public static float dd(float d1, float d2)
+    {
+        float d = d2 - d1;
+        if (d > 180.0f) d = d - 360.0f;
+        if (d < -180.0f) d = d + 360.0f;
+        return d;
+    }
 
     // check if src inside the range centered at tgt 
     public static bool In(float src, float tgt, float rad ) 
@@ -119,4 +149,11 @@ public class Physics
     {
          return dir + ((sfc_dir - 90) - dir) * 2;
     }
+
+    public static void protect(ref float var, float min, float max)
+    {
+        if (var > max) var = max;
+        if (var < min) var = min;
+    }
+
 }

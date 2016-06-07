@@ -30,6 +30,7 @@ public struct DATA_ARENA
     public string name;
     public string name_rus;
 
+    public string type; // standard = int or nhl
     public float width; 
     public float lenght; 
     public float round;

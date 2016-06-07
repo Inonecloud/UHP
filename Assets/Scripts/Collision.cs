@@ -12,6 +12,8 @@ public struct Collision
     public static int GLASS = 5;
     public static int ICE = 9;
     public static int POLE = 10;
+    public static int NET = 11;
+    public static int PLAYER = 50;
 
 
 
@@ -121,6 +123,7 @@ public struct Collision
     public static void CheckNetCollision(ref PARAM param, ref PARAM pos, float radius)
     {
         float pole_width = 0.02f;
+        float net_width = 0.20f;
 
         if (pos.x > 0 && param.x < 0) return;
         if (pos.x < 0 && param.x > 0) return;
@@ -168,7 +171,7 @@ public struct Collision
         //*****************************************************************************
         // check the inner net
         float b = Mathf.Abs(param.x) + 1.2f;// -pos.alt * 0.5f;
-        if (pos.alt < 1.22f && Physics.In(Mathf.Abs(pos.x), b, 0.1f) && pos.y > -0.920f && pos.y < 0.920f)
+        if (pos.alt < 1.22f && Physics.In(Mathf.Abs(pos.x), b, net_width) && pos.y > -0.920f && pos.y < 0.920f)
         {
             if (pos.dir > 180f) pos.dir = Physics.BounceDir(pos.dir, 90); else pos.dir = Physics.BounceDir(pos.dir, 270);
             Physics.Move(ref pos);
@@ -179,7 +182,7 @@ public struct Collision
         }
         // check the left net
         float bl = param.y - 0.920f;// -pos.alt * 0.5f;
-        if (pos.alt < 1.22f && Mathf.Abs(pos.x) >= Mathf.Abs(param.x) && Mathf.Abs(pos.x) <= b && pos.y > bl - 0.2f && pos.y < bl + 0.2f)
+        if (pos.alt < 1.22f && Mathf.Abs(pos.x) >= Mathf.Abs(param.x) && Mathf.Abs(pos.x) <= b && pos.y > bl - net_width && pos.y < bl + net_width)
         {
             if (pos.dir > 190f && pos.dir < 270f) pos.dir = Physics.BounceDir(pos.dir, 0); else pos.dir = Physics.BounceDir(pos.dir, 180);
             Physics.Move(ref pos);
@@ -189,7 +192,7 @@ public struct Collision
         }
         // check the right net
         float br = param.y + 0.920f;// -pos.alt * 0.5f;
-        if (pos.alt < 1.22f && Mathf.Abs(pos.x) >= Mathf.Abs(param.x) && Mathf.Abs(pos.x) <= b && pos.y > br - 0.2f && pos.y < br + 0.2f)
+        if (pos.alt < 1.22f && Mathf.Abs(pos.x) >= Mathf.Abs(param.x) && Mathf.Abs(pos.x) <= b && pos.y > br - net_width && pos.y < br + net_width)
         {
             if (pos.dir > 190f && pos.dir < 270f) pos.dir = Physics.BounceDir(pos.dir, 0); else pos.dir = Physics.BounceDir(pos.dir, 180);
             Physics.Move(ref pos);
@@ -222,5 +225,79 @@ public struct Collision
 
 
 
+
+
+    //==================================================================================
+    //==================================================================================
+    //==================================================================================
+    // collision with net poles and net itself
+    // better used for puck and maybe a stick
+    // param = net object parameters
+    // pos = moving object parameters
+    //==================================================================================
+    //==================================================================================
+    //==================================================================================
+    public static void CheckNetCollisionHeavy(ref PARAM param, ref PARAM pos, float radius)
+    {
+
+        float pole_width = 0.02f;
+
+        if (pos.x > 0 && param.x < 0) return;
+        if (pos.x < 0 && param.x > 0) return;
+
+        // check left pole
+        float d = Physics.Distance(pos.x, pos.y, param.x, param.y - 0.915f) - radius;
+        if ( d < pole_width)
+        {
+            // apply moving to net
+            param.speed = pos.speed * 0.9f;
+            param.dir = pos.dir;
+            param.rh = -param.x;
+            param.collision = PLAYER;
+            // affect the player            
+            pos.speed *= 0.9f;
+            pos.collision = POLE;
+
+        }
+        // check right pole
+        d = Physics.Distance(pos.x, pos.y, param.x, param.y + 0.915f) - radius;
+        if ( d < pole_width)
+        {
+            // apply moving to net
+            param.speed = pos.speed * 0.9f;
+            param.dir = pos.dir;
+            param.rh = param.x;
+            param.collision = PLAYER;
+            // affect the player            
+            pos.speed *= 0.9f;
+            pos.collision = POLE;
+        }
+        // check upper pole
+        if ( Physics.In(pos.x, param.x, pole_width) && pos.y > -0.919f && pos.y < 0.919f)
+        {
+            // apply moving to net
+            param.speed = pos.speed * 0.9f;
+            param.dir = pos.dir;
+            param.rp = 10.0f;
+            param.collision = PLAYER;
+            // affect the player            
+            pos.speed *= 0.9f;
+            pos.collision = POLE;
+        }
+        //*****************************************************************************
+        // check the inner net
+        if (Physics.In(Mathf.Abs(pos.x), Mathf.Abs(param.x) + 0.8f, 0.4f) && pos.y > param.y-0.920f && pos.y < param.y+0.920f)
+        {
+            // apply moving to net
+            param.speed = pos.speed * 0.9f;
+            param.dir = pos.dir;
+            param.collision = PLAYER;
+            // affect the player            
+            pos.speed *= 0.9f;
+            pos.collision = NET;
+        }
+
+
+    }
 
 };

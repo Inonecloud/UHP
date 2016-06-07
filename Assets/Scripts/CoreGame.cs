@@ -10,15 +10,15 @@ public class CCoreGame
 
 
     // global objects
-    CArena Arena;
-    CPuck Puck;
-    CNet NetHome;
-    CNet NetGuest;
-    CPlayer[] PlayerHome = new CPlayer[20];
-    CPlayer[] PlayerGuest = new CPlayer[20];
+    public CArena Arena;
+    public CPuck Puck;
+    public CNet NetHome;
+    public CNet NetGuest;
+    public CPlayer[] PlayerHome = new CPlayer[20];
+    public CPlayer[] PlayerGuest = new CPlayer[20];
 
-
-
+    // camera object
+    CCamera Cam;
 
 
 
@@ -26,6 +26,13 @@ public class CCoreGame
     public void Init()
     {
         Core.mode++;
+
+
+        //******************************
+        // init camera and lights
+        Cam = new CCamera();
+        Cam.Select(CCamera.GOAL_GUEST);
+
 
 
         //******************************
@@ -58,12 +65,12 @@ public class CCoreGame
 
 
         //******************************
-        // set initial positions
+        // set initial positions -home +guests
         //******************************
-        NetHome.param.x = Arena.data.net_pos;
-        NetGuest.param.x = -Arena.data.net_pos;
-        NetHome.param.h = -90;
-        NetGuest.param.h = 90;
+        NetHome.param.x = -Arena.data.net_pos;
+        NetGuest.param.x = Arena.data.net_pos;
+        NetHome.param.h = 90;
+        NetGuest.param.h = -90;
 
 
     }
@@ -78,6 +85,7 @@ public class CCoreGame
     public void Process()
     {
 
+        // temporary **********
         // random shot
         if (Time.frameCount % 200 == 1)
         {
@@ -86,6 +94,12 @@ public class CCoreGame
             //Puck.param.vv = 10f * Random.value;
             //Puck.pos.dir = 45f;
         }
+        PlayerHome[0].player.puck = Puck.param;
+        PlayerGuest[0].player.puck = Puck.param;
+        PlayerHome[0].player.side = 1;
+        PlayerGuest[0].player.side = -1;
+        PlayerHome[0].player.net_ot = NetGuest.param;
+
 
 
 
@@ -95,10 +109,12 @@ public class CCoreGame
         // process all objects calculations
         //=====================================
         Puck.Process();
+        NetHome.Process();
+        NetGuest.Process();
         for (int i = 0; i < 1; i++)
         {
             PlayerHome[i].Process( ref Puck.param, NetHome.param, NetGuest.param );
-            PlayerGuest[i].Process( ref Puck.param, NetHome.param, NetGuest.param );
+            //PlayerGuest[i].Process( ref Puck.param, NetHome.param, NetGuest.param );
         }
 
 
@@ -109,9 +125,16 @@ public class CCoreGame
         //=====================================
         // check collisions 
         //=====================================
-        Collision.CheckBoardCollision( ref Arena.data, ref Puck.param, 0.5f);
-        Collision.CheckNetCollision( ref NetHome.param,ref Puck.param, 0.2f);
-        Collision.CheckNetCollision( ref NetGuest.param, ref Puck.param, 0.2f);
+        Collision.CheckBoardCollision( ref Arena.data, ref Puck.param, 0.1f);
+        Collision.CheckNetCollision( ref NetHome.param,ref Puck.param, 0.1f);
+        Collision.CheckNetCollision( ref NetGuest.param, ref Puck.param, 0.1f);
+        for (int i = 0; i < 1; i++)
+        {
+            Collision.CheckNetCollisionHeavy(ref NetHome.param, ref PlayerHome[i].param, 0.3f );
+            Collision.CheckNetCollisionHeavy(ref NetGuest.param, ref PlayerHome[i].param, 0.3f);
+            Collision.CheckNetCollisionHeavy(ref NetHome.param, ref PlayerGuest[i].param, 0.3f);
+            Collision.CheckNetCollisionHeavy(ref NetGuest.param, ref PlayerGuest[i].param, 0.3f);
+        }
 
 
  
@@ -136,8 +159,7 @@ public class CCoreGame
         //=====================================
         // camera
         //=====================================
-        Camera.main.transform.LookAt(Puck.PuckObj.transform);
-
+        Cam.Show( ref Arena.data, ref Puck.param, ref NetHome.param, ref NetGuest.param);
 
     }
 
@@ -151,7 +173,7 @@ public class CCoreGame
     {
         //float d = Vector2.Distance(new Vector2(Puck.pos.x, Puck.pos.y), new Vector2(Me.transform.position.x, Me.transform.position.z));
         //float r = Vector2.Angle(new Vector2(Puck.pos.x, Puck.pos.y), new Vector2(Me.transform.position.x, Me.transform.position.z));
-        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "DEBUG "+(PlayerHome[0].param.dir.ToString()) );
+        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "DEBUG "+(Cam.dir.ToString()) );
     }
 
 }
