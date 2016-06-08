@@ -14,8 +14,55 @@ public class Physics
     //============================================
     // player movements 
     //============================================
-    public static void PlayerPhysics(ref PARAM param)
+    public static void PlayerPhysics(ref PARAM param, ref DATA_PLAYER data)
     {
+
+        if (data.legs == Action.RUN)
+        {
+            param.tgt_speed += 5.0f * Time.deltaTime;
+            if (param.tgt_speed > 4.0f) param.tgt_speed = 4.0f;
+        }
+
+        if (data.legs == Action.RUN_FAST)
+        {
+            param.tgt_speed += 5.0f * Time.deltaTime;
+            if (param.tgt_speed > 5.0f) param.tgt_speed = 5.0f;
+        }
+
+        if (data.legs == Action.STOP)
+        {
+            param.speed -= 2.0f * Time.deltaTime;
+            param.tgt_speed = param.speed;
+        }
+        if (data.legs == Action.TURN_LEFT)
+        {
+            param.tgt_dir -= (360.0f - param.speed * 30f) * Time.deltaTime;
+        }
+        if (data.legs == Action.TURN_RIGHT)
+        {
+            param.tgt_dir += (360.0f - param.speed * 30f) * Time.deltaTime;
+        }
+        if (data.legs == Action.TURN_LEFT_FAST)
+        {
+            param.tgt_dir -= (180.0f - param.speed * 30f) * Time.deltaTime;
+        }
+        if (data.legs == Action.TURN_RIGHT_FAST)
+        {
+            param.tgt_dir += (180.0f - param.speed * 30f) * Time.deltaTime;
+        }
+
+
+        if (param.dir - param.tgt_dir > 180f) param.dir -= 360;
+        if (param.dir - param.tgt_dir < -180f) param.dir += 360;
+        smooth(ref param.dir, param.tgt_dir, 10.0f * Time.deltaTime);
+        if (param.h - param.dir > 180f) param.h -= 360;
+        if (param.h - param.dir < -180f) param.h += 360;
+        smooth(ref param.h, param.dir, 10.0f * Time.deltaTime);
+        if (param.tgt_speed > param.speed) smooth(ref param.speed, param.tgt_speed, 2.0f * Time.deltaTime);
+
+        if (param.speed > 0) param.speed *= 0.97f;
+        if (param.speed < 0) param.speed = 0;
+
         Physics.Move(ref param);
     }
 
@@ -30,9 +77,11 @@ public class Physics
     //============================================
     public static void PuckPhysics( ref PARAM param )
     {
-       if (param.alt < 0.01)
+        param.object_event = 0; // erase the flag
+        
+        if (param.alt < 0.01)
         {
-            param.speed = param.speed * 0.995f;
+            param.speed = param.speed * 0.992f;
             param.p *= 0.45f;
             param.b *= 0.45f;
             param.h *= 0.8f;
@@ -50,9 +99,11 @@ public class Physics
     //============================================
     public static void NetPhysics(ref PARAM param)
     {
+        param.object_event = 0; // erase the flag
+
         param.speed *= 0.98f; // reduce speed
         param.rh *= 0.9f; // reduce rotation
-        if( param.p>0 ) param.rp -= 0.5f; // dont jump too high
+        if( param.p>0 ) param.rp -= 1.0f; // dont jump too high
         if (param.p < 0) { param.p = 0; param.rp = 0f; } // stop jump rotation
         Physics.Move(ref param);
     }
@@ -69,6 +120,7 @@ public class Physics
     //============================================
     public static PARAM Move(ref PARAM param)
     {
+        param.tgt_dir = Physics.d2d(param.tgt_dir); // normalize dir 
         param.dir = Physics.d2d(param.dir); // normalize dir 
         param.h = Physics.d2d(param.h); // normalize heading
 
@@ -136,12 +188,11 @@ public class Physics
     }
 
     // calculate random rotations
-    public static PARAM RandomRotation(PARAM pos, float speed)
+    public static void RandomRotation(ref PARAM pos, float speed)
     {
         pos.rp = speed * 200.0f * (0.9f + Random.value);
         pos.rb = speed * 200.0f * (0.9f + Random.value);
         pos.rh = speed * 100.0f * (0.9f + Random.value);
-        return pos;
     }
 
     // calculate bounce direction
@@ -156,4 +207,9 @@ public class Physics
         if (var < min) var = min;
     }
 
+
+    public static void smooth(ref float var, float tgt, float spd = 0.5f)
+    {
+        var += (tgt - var) * spd;
+    }
 }

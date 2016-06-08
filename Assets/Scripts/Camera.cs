@@ -12,6 +12,7 @@ public class CCamera
     public static int GOAL_HOME = 12;
     public static int GOAL_GUEST = 13;
     public static int PLAY = 20;
+    public static int PLAY_FOLLOW = 21;
     public static int POV = 30;
 
     // current active camera
@@ -22,6 +23,9 @@ public class CCamera
     public float dir; // direction change
     public float pitch; // pitch change
 
+
+    // look at player for play action cameras
+    public Transform user_head; // player head
 
 
     public void Select(int seltype)
@@ -69,13 +73,37 @@ public class CCamera
             Camera.main.transform.eulerAngles = new Vector3(20.0f, net_home.h, 0.0f);
             Camera.main.fov = 90.0f;
         }
+        if (type == GOAL_HOME)
+        {
+            // place the camera inside the net
+            float x = net_home.x - 0.6f * Mathf.Sin(Mathf.Deg2Rad * net_home.h);
+            float y = net_home.y - 0.6f * Mathf.Cos(Mathf.Deg2Rad * net_home.h);
+            // find where is the puck and turn our camera in that direction
+            if (net_home.object_event == Event.NULL)
+            {
+                float d = Physics.dd(net_home.h, Physics.Angle(x, y, puck.x, puck.y));
+                float tgtd = 0f;
+                if (d > 50.0f) tgtd = 50f;
+                if (d > 90.0f) tgtd = 80f;
+                if (d < -50.0f) tgtd = -50f;
+                if (d < -90.0f) tgtd = -80f;
+                if (dir < tgtd) dir += 2.0f;
+                if (dir > tgtd) dir -= 2.0f;
+                Physics.protect(ref dir, -120f, 120f);
+            }
+            if (net_home.object_event == 0) { dir += 30.0f * Random.value - 60 * Random.value; pitch = 20.0f * Random.value - 40 * Random.value; }
+            Physics.protect( ref pitch, -40f, 40f);
+            Camera.main.transform.position = new Vector3(x, 0.9f, y);
+            Camera.main.transform.eulerAngles = new Vector3(20.0f + pitch, net_home.h + dir, 0.0f);
+            Camera.main.fov = 90.0f;
+        }
         if (type == GOAL_GUEST)
         {
             // place the camera inside the net
             float x = net_guest.x - 0.6f * Mathf.Sin(Mathf.Deg2Rad * net_guest.h);
             float y = net_guest.y - 0.6f * Mathf.Cos(Mathf.Deg2Rad * net_guest.h);
             // find where is the puck and turn our camera in that direction
-            if (net_guest.collision == 0)
+            if (net_guest.object_event == 0)
             {
                 float d = Physics.dd(net_guest.h, Physics.Angle(x, y, puck.x, puck.y));
                 float tgtd = 0f;
@@ -85,14 +113,49 @@ public class CCamera
                 if (d < -90.0f) tgtd = -80f;
                 if (dir < tgtd) dir += 2.0f;
                 if (dir > tgtd) dir -= 2.0f;
+                Physics.protect(ref dir, -120f, 120f);
             }
-            if (net_guest.collision == Collision.PLAYER) { dir += 40.0f * Random.value - 80 * Random.value; pitch = 20.0f * Random.value - 40 * Random.value; }
-            Physics.protect( ref dir,-120f,120f );
-            Physics.protect( ref pitch, -40f, 40f);
+            if (net_guest.object_event == Event.PLAYER) { dir += 30.0f * Random.value - 60 * Random.value; pitch = 20.0f * Random.value - 40 * Random.value; }
+            Physics.protect(ref pitch, -40f, 40f);
             Camera.main.transform.position = new Vector3(x, 0.9f, y);
-            Camera.main.transform.eulerAngles = new Vector3(20.0f+pitch, net_guest.h+dir, 0.0f);
+            Camera.main.transform.eulerAngles = new Vector3(20.0f + pitch, net_guest.h + dir, 0.0f);
             Camera.main.fov = 90.0f;
         }
+
+
+        //======================
+        // user play cameras
+        //======================
+        if (type == PLAY)
+        {
+            Camera.main.transform.position = new Vector3(user_head.position.x-5.0f,user_head.position.y+5.0f,user_head.position.z);
+            Camera.main.transform.eulerAngles = new Vector3(40.0f, 90.0f, 0.0f);
+            Camera.main.fov = 60.0f;
+        }
+
+        if (type == PLAY_FOLLOW)
+        {
+            float d = Physics.Angle(user_head.position.x, user_head.position.z, puck.x, puck.y);
+            float cx = user_head.position.x - 5.0f * Mathf.Sin(Mathf.Deg2Rad * (user_head.eulerAngles.y+90.0f));
+            float cz = user_head.position.z - 5.0f * Mathf.Cos(Mathf.Deg2Rad * (user_head.eulerAngles.y+90.0f));
+            Physics.smooth(ref dir, d, 0.01f*Time.deltaTime);
+            Camera.main.transform.position = new Vector3(cx, user_head.position.y + 5.0f, cz);
+            Camera.main.transform.eulerAngles = new Vector3(40.0f, dir, 0.0f);
+            Camera.main.fov = 60.0f;
+        }
+
+        if (type == POV)
+        {
+            float d = Physics.Angle(user_head.position.x, user_head.position.z, puck.x, puck.y);
+            d = Physics.dd(d, user_head.eulerAngles.y + 90.0f);
+            Physics.protect(ref d, -100f, 100f);
+            Physics.smooth(ref dir, d, 1.0f * Time.deltaTime);
+            Camera.main.transform.position = new Vector3(user_head.position.x, user_head.position.y + 0.03f, user_head.position.z);
+            Camera.main.transform.eulerAngles = new Vector3(30f, user_head.eulerAngles.y+90.0f+dir, 0f);
+            Camera.main.fov = 80.0f;
+        }
+
+
 
 
     }

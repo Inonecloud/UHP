@@ -20,6 +20,14 @@ public class CCoreGame
     // camera object
     CCamera Cam;
 
+    // game controller
+    CController Controller;
+
+
+    // gameplay vars
+    int goal; // -1 0 1
+
+
 
 
     // Use this for initialization
@@ -29,10 +37,14 @@ public class CCoreGame
 
 
         //******************************
-        // init camera and lights
+        // init camera 
         Cam = new CCamera();
-        Cam.Select(CCamera.GOAL_GUEST);
+        Cam.Select(CCamera.POV);
 
+
+        //******************************
+        // init controllers
+        Controller = new CController();
 
 
         //******************************
@@ -73,6 +85,10 @@ public class CCoreGame
         NetGuest.param.h = -90;
 
 
+
+
+
+        SetupShootout();
     }
 
 
@@ -85,6 +101,8 @@ public class CCoreGame
     public void Process()
     {
 
+
+
         // temporary **********
         // random shot
         if (Time.frameCount % 200 == 1)
@@ -94,11 +112,13 @@ public class CCoreGame
             //Puck.param.vv = 10f * Random.value;
             //Puck.pos.dir = 45f;
         }
+        PlayerHome[0].user_control = true;
         PlayerHome[0].player.puck = Puck.param;
         PlayerGuest[0].player.puck = Puck.param;
         PlayerHome[0].player.side = 1;
         PlayerGuest[0].player.side = -1;
         PlayerHome[0].player.net_ot = NetGuest.param;
+        // temporary **********
 
 
 
@@ -113,8 +133,9 @@ public class CCoreGame
         NetGuest.Process();
         for (int i = 0; i < 1; i++)
         {
-            PlayerHome[i].Process( ref Puck.param, NetHome.param, NetGuest.param );
+            PlayerHome[i].Process( Controller, ref Puck.param, NetHome.param, NetGuest.param );
             //PlayerGuest[i].Process( ref Puck.param, NetHome.param, NetGuest.param );
+            if (PlayerHome[i].user_control) Cam.user_head = PlayerHome[i].PlayerHead;
         }
 
 
@@ -134,15 +155,29 @@ public class CCoreGame
             Collision.CheckNetCollisionHeavy(ref NetGuest.param, ref PlayerHome[i].param, 0.3f);
             Collision.CheckNetCollisionHeavy(ref NetHome.param, ref PlayerGuest[i].param, 0.3f);
             Collision.CheckNetCollisionHeavy(ref NetGuest.param, ref PlayerGuest[i].param, 0.3f);
+            Collision.CheckBoardCollision(ref Arena.data, ref PlayerGuest[i].param, 0.3f);
+            Collision.CheckBoardCollision(ref Arena.data, ref PlayerGuest[i].param, 0.3f);
         }
 
-
- 
 
 
 
         //=====================================
-        // process reaction and position objects in the scene
+        // sound procedures
+        //=====================================
+        Puck.Sound();
+        NetHome.Sound();
+        NetGuest.Sound();
+        for (int i = 0; i < 1; i++)
+        {
+            PlayerHome[i].Sound();
+            PlayerGuest[i].Sound();
+        }
+
+
+
+        //=====================================
+        // position objects in the scene
         //=====================================
         Puck.Post();
         NetHome.Post();
@@ -157,11 +192,61 @@ public class CCoreGame
 
 
         //=====================================
+        // gameplay 
+        //=====================================
+        if (Collision.CheckGoal(NetHome.param, Puck.param)) goal = 1;
+        if (Collision.CheckGoal(NetGuest.param, Puck.param)) goal = -1;
+        if (goal == 1) Arena.GoalHome();
+        if (goal == -1) Arena.GoalGuest();
+
+
+
+
+
+
+        //=====================================
         // camera
         //=====================================
-        Cam.Show( ref Arena.data, ref Puck.param, ref NetHome.param, ref NetGuest.param);
+        Controller.CameraControl(ref Cam);
+        Cam.Show(ref Arena.data, ref Puck.param, ref NetHome.param, ref NetGuest.param);
 
     }
+
+
+
+
+
+
+
+
+
+
+    //=====================================
+    // shootout setup
+    //=====================================
+    public void SetupShootout()
+    {
+        PlayerHome[0].param.x = -5f;
+        PlayerHome[0].param.y = 0;
+        PlayerHome[0].param.h = 90;
+        PlayerHome[0].param.dir = 90;
+        PlayerHome[0].param.tgt_dir = 90;
+
+        PlayerGuest[0].param.x = 24.5f;
+        PlayerGuest[0].param.y = 0;
+        PlayerGuest[0].param.h = -90;
+        PlayerGuest[0].param.dir = -90;
+        PlayerGuest[0].param.tgt_dir = -90;
+
+        Puck.param.x = 0;
+        Puck.param.y = 0;
+    }
+
+
+
+
+
+
 
 
 
@@ -173,7 +258,7 @@ public class CCoreGame
     {
         //float d = Vector2.Distance(new Vector2(Puck.pos.x, Puck.pos.y), new Vector2(Me.transform.position.x, Me.transform.position.z));
         //float r = Vector2.Angle(new Vector2(Puck.pos.x, Puck.pos.y), new Vector2(Me.transform.position.x, Me.transform.position.z));
-        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "DEBUG "+(Cam.dir.ToString()) );
+        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "DEBUG " + (PlayerHome[0].data.action_count.ToString()) +" "+(PlayerHome[0].param.object_event.ToString()));
     }
 
 }

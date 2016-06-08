@@ -11,6 +11,11 @@ public class CArena
     public GameObject ArenaObj;
     public GameObject IceObj;
 
+    // lights
+    public Light LightHome;
+    public Light LightGuest;
+    int light_timer;
+
 
     // parameters
     public DATA_ARENA data;
@@ -19,12 +24,14 @@ public class CArena
 
     public void Init(string dbkey)
     {
-        // load params from db first
         data = Database.LoadArena(dbkey);
-    }
+     }
 
 
-    public void Load( string dbkey )
+    //=================================================================================================
+    // normal loading procedure that loads everything for gameplay
+    //=================================================================================================
+    public void Load(string dbkey)
     {
         // load params from db first
         data = Database.LoadArena(dbkey);
@@ -34,17 +41,38 @@ public class CArena
  
         //IceObj = Object.Instantiate(Resources.Load("meshes/ice", typeof(GameObject))) as GameObject;
 
+        LightHome = GameObject.Find("Light Home Proj").GetComponent<Light>();
+        LightGuest = GameObject.Find("Light Guest Proj").GetComponent<Light>();
+
     }
 
 
 
 
 
+    //=================================================================================================
+    // calculate physics for objects
+    //=================================================================================================
     public void Process()
     {
     }
 
 
+
+
+    //=================================================================================================
+    // play the sounds
+    //=================================================================================================
+    public void Sound()
+    {
+    }
+
+
+
+
+    //=================================================================================================
+    // put player object in the scene with reqwuired coordinates and rotations
+    //=================================================================================================
     public void Post()
     {
     }
@@ -52,6 +80,32 @@ public class CArena
 
 
 
+
+    public void GoalHome()
+    {
+        light_timer++;
+        if (light_timer > 15 && light_timer<100)
+        {
+            if (Time.time % 0.2 < 0.1) LightHome.enabled = true; else LightHome.enabled = false;
+        }
+        else
+        {
+            LightHome.enabled = false;
+        }
+    }
+
+    public void GoalGuest()
+    {
+       light_timer++;
+        if (light_timer > 15 && light_timer<100)
+        {
+            if (Time.time%0.2 < 0.1) LightGuest.enabled = true; else LightGuest.enabled = false;
+        }
+        else
+        {
+            LightGuest.enabled = false;
+        }
+    }
 
 
 

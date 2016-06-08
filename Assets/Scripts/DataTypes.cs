@@ -10,12 +10,33 @@ public struct PARAM
     public float dir; // movement direction
     public float speed; // movement speed
     public float vv; // vertical velocity
+    public float tgt_speed, tgt_dir; // target velocities for accelerations
     // rotation
     public float p, b, h; // pitch bank heading
     public float rp, rb, rh; // rotation speeds
     // events
-    public int collision; // collision type
+    public Event object_event; // collision type or sound trigger
 };
+
+
+
+// player actions for legs and hands
+public enum Event
+{
+    NULL,
+    BOARD,
+    BOARD_HIT,
+    GLASS,
+    PUCK_ICE,
+    POLE,
+    NET,
+    PLAYER,
+    STICK_ICE,
+    SNAPSHOT,
+    SLAPSHOT,
+    SKATE_START
+}
+
 
 
 
@@ -57,6 +78,14 @@ public struct DATA_EQUIPMENT
 
 
 
+
+
+
+
+
+
+
+
 // player parameters
 public struct DATA_PLAYER
 {
@@ -64,8 +93,47 @@ public struct DATA_PLAYER
 
 
 
+    // player actions
+    public Action legs, hands; // actions for legs and hands
+    public float action_energy; // accumulated energy coefficient for hands action 0.0-1.0
+    public float action_count; // internal counter of action; 
  
 };
+
+
+// player actions for legs and hands
+public enum Action
+{
+    NULL,
+    RUN,
+    RUN_FAST,
+    STOP,
+    STOP_FAST,
+    TURN_LEFT,
+    TURN_LEFT_FAST,
+    TURN_RIGHT,
+    TURN_RIGHT_FAST,
+    PLAY_PUCK,
+    PLAY_PUCK_LEFT,
+    PLAY_PUCK_RIGHT,
+    PLAY_PUCK_FAST,
+    PLAY_PUCK_TRICK,
+    PASS,
+    PASS_ACC,
+    PASS_FAST,
+    PASS_FAST_ACC,
+    SHOT,
+    SHOT_ACC,
+    SHOT_FAST,
+    SHOT_FAST_ACC,
+    SLAP,
+    SLAP_ACC,
+    SLAP_FAST,
+    SLAP_FAST_ACC
+}
+
+
+
 
 
 

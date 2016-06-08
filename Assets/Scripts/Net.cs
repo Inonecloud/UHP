@@ -18,7 +18,10 @@ public class CNet
 
 
 
-    public void Load( string dbkey )
+    //=================================================================================================
+    // normal loading procedure that loads everything for the gameplay
+    //=================================================================================================
+    public void Load(string dbkey)
     {
         data = Database.LoadEquipment(dbkey);
 
@@ -30,12 +33,11 @@ public class CNet
 
 
 
+    //=================================================================================================
+    // calculate physics for objects
+    //=================================================================================================
     public void Process()
     {
-        // flush the collision flag
-        param.collision = 0;
-
-        // process physics
         Physics.NetPhysics(ref param);
     }
 
@@ -43,7 +45,19 @@ public class CNet
 
 
 
+    //=================================================================================================
+    // play the sounds
+    //=================================================================================================
+    public void Sound()
+    {
+    }
 
+
+
+
+    //=================================================================================================
+    // put player object in the scene with reqwuired coordinates and rotations
+    //=================================================================================================
     public void Post()
     {
         //float corr = 0.55f; if (param.x < 0f) corr = -0.55f; 

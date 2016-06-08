@@ -27,13 +27,12 @@ public class CPuck
 
 
 
-    public void Init(string dbkey)
-    {
-        data = Database.LoadEquipment(dbkey);
-    }
+ 
 
-
-    public void Load( string dbkey )
+    //=================================================================================================
+    // normal loading procedure that loads everything for gameplay
+    //=================================================================================================
+    public void Load(string dbkey)
     {
         data = Database.LoadEquipment(dbkey);
 
@@ -53,6 +52,9 @@ public class CPuck
 
 
 
+    //=================================================================================================
+    // calculate physics for object
+    //=================================================================================================
     public void Process()
     {
         Physics.PuckPhysics(ref param);
@@ -61,7 +63,10 @@ public class CPuck
 
 
 
-    public void Post()
+    //=================================================================================================
+    // play the sounds
+    //=================================================================================================
+    public void Sound()
     {
         // set up audio environment
         AudioHit.spatialBlend = 0.5f;
@@ -69,18 +74,23 @@ public class CPuck
         AudioHit.pitch = 0.8f + 0.4f * Random.value;
         AudioIce.pitch = 0.8f + 0.4f * Random.value;
         // play sounds
-        if (param.collision == Collision.BOARD) AudioHit.PlayOneShot(snd_board_0, param.speed / 30.0f);
-        if (param.collision == Collision.BOARD_HIT && param.speed <= 20) AudioHit.PlayOneShot(snd_board_1, param.speed / 30.0f);
-        if (param.collision == Collision.BOARD_HIT && param.speed > 20) AudioHit.PlayOneShot(snd_board_2, param.speed / 30.0f);
-        if (param.collision == Collision.GLASS) AudioHit.PlayOneShot(snd_glass, param.speed / 30.0f);
-        if (param.collision == Collision.ICE) AudioIce.PlayOneShot(snd_ice, param.vv / 30.0f);
-        if (param.collision == Collision.POLE) AudioIce.PlayOneShot(snd_pole, param.speed / 30.0f);
+        if (param.object_event == Event.BOARD) AudioHit.PlayOneShot(snd_board_0, param.speed / 30.0f);
+        if (param.object_event == Event.BOARD_HIT && param.speed <= 20) AudioHit.PlayOneShot(snd_board_1, param.speed / 30.0f);
+        if (param.object_event == Event.BOARD_HIT && param.speed > 20) AudioHit.PlayOneShot(snd_board_2, param.speed / 30.0f);
+        if (param.object_event == Event.GLASS) AudioHit.PlayOneShot(snd_glass, param.speed / 30.0f);
+        if (param.object_event == Event.PUCK_ICE) AudioIce.PlayOneShot(snd_ice, param.vv / 30.0f);
+        if (param.object_event == Event.POLE) AudioIce.PlayOneShot(snd_pole, param.speed / 30.0f);
+    }
 
+
+
+    //=================================================================================================
+    // put player object in the scene with reqwuired coordinates and rotations
+    //=================================================================================================
+    public void Post()
+    {
         PuckObj.transform.position = new Vector3(param.x, param.alt + 0.01f, param.y);
         PuckObj.transform.eulerAngles = new Vector3(param.p, param.h, param.b);
-
-        // flush the collision flag
-        param.collision = 0;
     }
  
 }
