@@ -25,9 +25,7 @@ public class CCoreGame
 
 
     // gameplay vars
-    int goal; // -1 0 1
-
-
+    public static int goal = 0; // -1 0 1
 
 
     // Use this for initialization
@@ -165,6 +163,7 @@ public class CCoreGame
         //=====================================
         // sound procedures
         //=====================================
+		Arena.Sound();
         Puck.Sound();
         NetHome.Sound();
         NetGuest.Sound();
@@ -194,10 +193,13 @@ public class CCoreGame
         //=====================================
         // gameplay 
         //=====================================
+		if (goal != 0) goal = 0;
         if (Collision.CheckGoal(NetHome.param, Puck.param)) goal = 1;
         if (Collision.CheckGoal(NetGuest.param, Puck.param)) goal = -1;
         if (goal == 1) Arena.GoalHome();
         if (goal == -1) Arena.GoalGuest();
+		if (goal != 0)
+			SetupShootout ();
 
 
 
@@ -240,6 +242,7 @@ public class CCoreGame
 
         Puck.param.x = 0;
         Puck.param.y = 0;
+		Puck.param.speed = 0;
     }
 
 

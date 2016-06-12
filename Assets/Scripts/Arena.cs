@@ -65,6 +65,8 @@ public class CArena
     //=================================================================================================
     public void Sound()
     {
+		if (CCoreGame.goal == 1 || CCoreGame.goal == -1)
+			PlayHorn ();
     }
 
 
@@ -106,16 +108,18 @@ public class CArena
             LightGuest.enabled = false;
         }
     }
-
-
+		
+	private void PlayHorn() {
+			AudioClip arenaHorn = Resources.Load ("sounds/goal_easy_horn", typeof(AudioClip)) as AudioClip;
+			AudioSource arenaHornSrc = ArenaObj.AddComponent<AudioSource> ();
+			arenaHornSrc.spatialBlend = 0.7f;
+			arenaHornSrc.pitch = 0.9f;
+			arenaHornSrc.PlayOneShot (arenaHorn, 0.1f);
+	}
 
     
 
 
 
-
-
-
- 
 
 }
