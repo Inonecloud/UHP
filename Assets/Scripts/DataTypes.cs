@@ -91,7 +91,7 @@ public struct DATA_PLAYER
 {
     public string key; // database key
 
-
+    public Role role; //player role in team 
 
     // player actions
     public Action legs, hands; // actions for legs and hands
@@ -132,7 +132,15 @@ public enum Action
     SLAP_FAST_ACC
 }
 
-
+//players role
+public enum Role {
+    GK,
+    LEFT_DEF,
+    RIGHT_DEF,
+    LEFT_FWD,
+    CNTR_FWD,
+    RIGHT_FWD
+}
 
 
 

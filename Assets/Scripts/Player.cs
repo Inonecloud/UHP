@@ -27,10 +27,13 @@ public class CPlayer
     public PARAM param;
     public DATA_PLAYER data;
     public AI_PLAYER player;
+    public AI_PLAYER goalkeeper;
 
 
     // player control
     public bool user_control; // this player is under the user control
+
+    //goalkeeper flag
 
 
     // sounds
