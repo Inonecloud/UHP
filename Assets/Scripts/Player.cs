@@ -34,6 +34,7 @@ public class CPlayer
     public bool user_control; // this player is under the user control
 
     //goalkeeper flag
+    //private bool is_goalkeerper;
 
 
     // sounds
@@ -116,6 +117,7 @@ public class CPlayer
 
         if (user_control) Controller.PlayerControl( ref data ); // process user control inputs
         if (!user_control) AIPlayer.ProcessAI( ref param, ref player); // ai predictions and desicion making
+       // if () AIGoalkeeper.ProcessAI(ref param, ref goalkeeper ); // ai for goalkeeper // IF FOR GOALY!!!
         AIPlayer.PuckControl( ref param, ref data, ref player, ref puck); // actions with puck
         Physics.PlayerPhysics(ref param, ref data); // moooove
 
