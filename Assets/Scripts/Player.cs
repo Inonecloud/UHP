@@ -27,7 +27,6 @@ public class CPlayer
     public PARAM param;
     public DATA_PLAYER data;
     public AI_PLAYER player;
-    public AI_PLAYER goalkeeper;
 
 
     // player control
@@ -117,7 +116,6 @@ public class CPlayer
 
         if (user_control) Controller.PlayerControl( ref data ); // process user control inputs
         if (!user_control) AIPlayer.ProcessAI( ref param, ref player); // ai predictions and desicion making
-       // if () AIGoalkeeper.ProcessAI(ref param, ref goalkeeper ); // ai for goalkeeper // IF FOR GOALY!!!
         AIPlayer.PuckControl( ref param, ref data, ref player, ref puck); // actions with puck
         Physics.PlayerPhysics(ref param, ref data); // moooove
 

@@ -134,12 +134,14 @@ public enum Action
 
 //players role
 public enum Role {
-    GK,
-    LEFT_DEF,
-    RIGHT_DEF,
-    LEFT_FWD,
-    CNTR_FWD,
-    RIGHT_FWD
+    GOALKEEPER,
+    LEFT_DEFENDER,
+    RIGHT_DEFENDER,
+    LEFT_FOWARD,
+    CNTR_FORWARD,
+    RIGHT_FORWARD,
+    COACH,
+    REFEREE
 }
 
 
