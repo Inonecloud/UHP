@@ -6,17 +6,17 @@ using System.Collections;
 public class CCamera
 {
     // camera types
-    public static int TV = 0;
+    public static int TV = 9;
     public static int NET_HOME = 10;
     public static int NET_GUEST = 11;
     public static int GOAL_HOME = 12;
     public static int GOAL_GUEST = 13;
-    public static int PLAY = 20;
-    public static int PLAY_FOLLOW = 21;
-    public static int POV = 30;
+    public static int PLAY = 14;
+    public static int PLAY_FOLLOW = 15;
+    public static int POV = 16;
 
     // current active camera
-    public int type;
+    public static int type;
 
 
     // camera parameters

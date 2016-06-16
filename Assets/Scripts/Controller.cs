@@ -8,9 +8,6 @@ public class CController
     bool shift; // acceleration and shot modifier
 
 
-
-
-
     //=============================================
     // load controller setup
     //=============================================
@@ -92,43 +89,22 @@ public class CController
     //=============================================
     // handle camera controls
     //=============================================
-    public void CameraControl(ref CCamera m_camera)
+    public void CameraControl(ref CCamera cam)
     {
         //Switch cam;
-        // T - TV
-        // N - NET_HOME
-        // M - NET_GUEST
-        // H - GOAL_HOME
-        // G - GOAL_GUEST
-        // L - PLAY
-        // P - POV
+        // T - Switch on every type of camera
+
+		int cam_type = CCamera.type;
+
         if (Input.GetKeyDown(KeyCode.T))
         {
-            m_camera.Select(CCamera.TV);
-        }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            m_camera.Select(CCamera.GOAL_GUEST);
-        }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            m_camera.Select(CCamera.GOAL_HOME);
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            m_camera.Select(CCamera.POV);
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            m_camera.Select(CCamera.NET_HOME);
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            m_camera.Select(CCamera.NET_GUEST);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            m_camera.Select(CCamera.PLAY);
+			if (CCamera.type == CCamera.POV)
+				cam_type = CCamera.TV;
+			else
+				cam_type += 1;
+
+			Debug.Log ("CAMERA TYPE: " + cam_type);
+			cam.Select (cam_type);
         }
 
     }

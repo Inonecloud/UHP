@@ -16,6 +16,9 @@ public class CArena
     public Light LightGuest;
     int light_timer;
 
+	// sounds
+	AudioSource ArenaSound;
+	AudioClip default_horn;
 
     // parameters
     public DATA_ARENA data;
@@ -43,6 +46,10 @@ public class CArena
 
         LightHome = GameObject.Find("Light Home Proj").GetComponent<Light>();
         LightGuest = GameObject.Find("Light Guest Proj").GetComponent<Light>();
+
+		// load sounds
+		default_horn = Resources.Load ("sounds/goal_easy_horn", typeof(AudioClip)) as AudioClip;
+		ArenaSound = ArenaObj.AddComponent<AudioSource> ();
 
     }
 
@@ -110,11 +117,9 @@ public class CArena
     }
 		
 	private void PlayHorn() {
-			AudioClip arenaHorn = Resources.Load ("sounds/goal_easy_horn", typeof(AudioClip)) as AudioClip;
-			AudioSource arenaHornSrc = ArenaObj.AddComponent<AudioSource> ();
-			arenaHornSrc.spatialBlend = 0.7f;
-			arenaHornSrc.pitch = 0.9f;
-			arenaHornSrc.PlayOneShot (arenaHorn, 0.1f);
+		ArenaSound.spatialBlend = 0.7f;
+		ArenaSound.pitch = 0.9f;
+		ArenaSound.PlayOneShot (default_horn, 0.1f);
 	}
 
     
