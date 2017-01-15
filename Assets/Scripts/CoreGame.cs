@@ -51,7 +51,7 @@ public class CCoreGame
         Puck = new CPuck();
         NetHome = new CNet();
         NetGuest = new CNet();
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 3; i++)
         {
             PlayerHome[i] = new CPlayer();
             PlayerGuest[i] = new CPlayer();
@@ -66,7 +66,7 @@ public class CCoreGame
         NetHome.Load("net");
         NetGuest.Load("net");
 
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 3; i++)
         {
             PlayerHome[i].Load("test");
             PlayerGuest[i].Load("test");
@@ -116,6 +116,20 @@ public class CCoreGame
         PlayerHome[0].player.side = 1;
         PlayerGuest[0].player.side = -1;
         PlayerHome[0].player.net_ot = NetGuest.param;
+
+        PlayerHome[1].user_control = false;
+        PlayerHome[1].player.puck = Puck.param;
+        PlayerGuest[1].player.puck = Puck.param;
+        PlayerHome[1].player.side = 1;
+        PlayerGuest[1].player.side = -1;
+        PlayerHome[1].player.net_ot = NetGuest.param;
+
+        PlayerHome[2].user_control = false;
+        PlayerHome[2].player.puck = Puck.param;
+        PlayerGuest[2].player.puck = Puck.param;
+        PlayerHome[2].player.side = 1;
+        PlayerGuest[2].player.side = -1;
+        PlayerHome[2].player.net_ot = NetGuest.param;
         // temporary **********
 
 
@@ -129,7 +143,7 @@ public class CCoreGame
         Puck.Process();
         NetHome.Process();
         NetGuest.Process();
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 3; i++)
         {
             PlayerHome[i].Process( Controller, ref Puck.param, NetHome.param, NetGuest.param );
             //PlayerGuest[i].Process( ref Puck.param, NetHome.param, NetGuest.param );
@@ -181,7 +195,7 @@ public class CCoreGame
         Puck.Post();
         NetHome.Post();
         NetGuest.Post();
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 3; i++)
         {
             PlayerHome[i].Post();
             PlayerGuest[i].Post();
@@ -239,6 +253,30 @@ public class CCoreGame
         PlayerGuest[0].param.h = -90;
         PlayerGuest[0].param.dir = -90;
         PlayerGuest[0].param.tgt_dir = -90;
+
+        PlayerHome[1].param.x = -10f;
+        PlayerHome[1].param.y = 0;
+        PlayerHome[1].param.h = 90;
+        PlayerHome[1].param.dir = 90;
+        PlayerHome[1].param.tgt_dir = 90;
+
+        PlayerGuest[1].param.x = 30.5f;
+        PlayerGuest[1].param.y = 0;
+        PlayerGuest[1].param.h = -90;
+        PlayerGuest[1].param.dir = -90;
+        PlayerGuest[1].param.tgt_dir = -90;
+
+        PlayerHome[2].param.x = 5f;
+        PlayerHome[2].param.y = 0;
+        PlayerHome[2].param.h = 90;
+        PlayerHome[2].param.dir = 90;
+        PlayerHome[2].param.tgt_dir = 90;
+
+        PlayerGuest[2].param.x = 20.5f;
+        PlayerGuest[2].param.y = 0;
+        PlayerGuest[2].param.h = -90;
+        PlayerGuest[2].param.dir = -90;
+        PlayerGuest[2].param.tgt_dir = -90;
 
         Puck.param.x = 0;
         Puck.param.y = 0;
