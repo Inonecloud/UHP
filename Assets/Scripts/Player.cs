@@ -114,10 +114,14 @@ public class CPlayer
     {
         param.object_event = 0; // erase the flag
 
-        if (user_control) Controller.PlayerControl( ref data ); // process user control inputs
-        if (!user_control) AIPlayer.ProcessAI( ref param, ref player); // ai predictions and desicion making
+        if (user_control)
+			Controller.PlayerControl( ref data ); // process user control inputs
+        //else
+		//	AIPlayer.ProcessAI( ref param, ref player); // ai predictions and desicion making
+		// Временно отключил тестовый AI ботов
+		
         AIPlayer.PuckControl( ref param, ref data, ref player, ref puck); // actions with puck
-       // Physics.PlayerPhysics(ref param, ref data); // moooove
+        Physics.PlayerPhysics(ref param, ref data); // moooove
 
     }
 
