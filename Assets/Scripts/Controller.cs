@@ -80,12 +80,6 @@ public class CController
 
 
 
-
-
-
-
-
-
     //=============================================
     // handle camera controls
     //=============================================
@@ -103,7 +97,7 @@ public class CController
 			else
 				cam_type += 1;
 
-			Debug.Log ("CAMERA TYPE: " + cam_type);
+			//Debug.Log ("CAMERA TYPE: " + cam_type);
 			cam.Select (cam_type);
         }
 

@@ -29,7 +29,7 @@ public class CSoundtrack
 		}
 	}
 
-	// Class providing shuffle right index
+	// Class providing shuffled tune
 	protected class Shuffle {
 
 		private int shuffled_index = -1;
@@ -100,36 +100,46 @@ public class CSoundtrack
 
 	// Play tune by index in array
 	public void PlayTune (Tune song) {
+		
 		current_tune = song;
 		MusicSource.PlayOneShot (current_tune.clip, 0.08f);
 	}
 
+
+	// Mute audio source
 	public void Mute (bool off) {
 		
 		MusicSource.volume = (off) ? 0.0f : 0.8f;
-
 	}
 
+	// Mute audio source
 	public bool IsMuted() {
 
 		return (MusicSource.volume == 0.0f);
-
 	}
+
 
 	// Set - Set custom audio source for playing tracks
 	public void SetCustomAudioSource(ref AudioSource custom_audio_source) {
+		
 		MusicSource = custom_audio_source;
 	}
 
+
 	// Get - Default audio source by CORE object
 	public AudioSource DefaultAudioSource() {
+		
 		return GameObject.Find("Core").AddComponent<AudioSource> ();
 	}
 
+
+
 	// Update process
 	public void Process() {
+		
 		if (!MusicSource.isPlaying) {
 			PlayTune (shuffling.PlayNext ());
+
 		} else {
 			// Temp. 
 			// Alt + N - next shuffled track
@@ -152,6 +162,7 @@ public class CSoundtrack
 
 	// Widget
 	public void OnGUI() {
+		
 		GUIStyle label_style = new GUIStyle();
 		label_style.fontSize = 10;
 

@@ -51,7 +51,7 @@ public class CCoreGame
         Puck = new CPuck();
         NetHome = new CNet();
         NetGuest = new CNet();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 5; i++)
         {
             PlayerHome[i] = new CPlayer();
            // PlayerGuest[i] = new CPlayer();
@@ -66,7 +66,7 @@ public class CCoreGame
         NetHome.Load("net");
         NetGuest.Load("net");
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 5; i++)
         {
             PlayerHome[i].Load("test");
          // PlayerGuest[i].Load("test");
@@ -86,7 +86,7 @@ public class CCoreGame
 
 
 
-        SetupShootout();
+        //SetupShootout();
     }
 
 
@@ -153,11 +153,13 @@ public class CCoreGame
         Puck.Process();
         NetHome.Process();
         NetGuest.Process();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 5; i++)
         {
             PlayerHome[i].Process( Controller, ref Puck.param, NetHome.param, NetGuest.param );
             //PlayerGuest[i].Process( ref Puck.param, NetHome.param, NetGuest.param );
-            if (PlayerHome[i].user_control) Cam.user_head = PlayerHome[i].PlayerHead;
+
+            if (PlayerHome[i].user_control)
+				Cam.user_head = PlayerHome[i].PlayerHead;
         }
 
 
@@ -171,14 +173,15 @@ public class CCoreGame
         Collision.CheckBoardCollision( ref Arena.data, ref Puck.param, 0.1f);
         Collision.CheckNetCollision( ref NetHome.param,ref Puck.param, 0.1f);
         Collision.CheckNetCollision( ref NetGuest.param, ref Puck.param, 0.1f);
-        for (int i = 0; i < 1; i++)
+
+        for (int i = 0; i < 5; i++)
         {
             Collision.CheckNetCollisionHeavy(ref NetHome.param, ref PlayerHome[i].param, 0.3f );
             Collision.CheckNetCollisionHeavy(ref NetGuest.param, ref PlayerHome[i].param, 0.3f);
-            Collision.CheckNetCollisionHeavy(ref NetHome.param, ref PlayerGuest[i].param, 0.3f);
-            Collision.CheckNetCollisionHeavy(ref NetGuest.param, ref PlayerGuest[i].param, 0.3f);
-            Collision.CheckBoardCollision(ref Arena.data, ref PlayerGuest[i].param, 0.3f);
-            Collision.CheckBoardCollision(ref Arena.data, ref PlayerGuest[i].param, 0.3f);
+            //Collision.CheckNetCollisionHeavy(ref NetHome.param, ref PlayerGuest[i].param, 0.3f);
+            //Collision.CheckNetCollisionHeavy(ref NetGuest.param, ref PlayerGuest[i].param, 0.3f);
+            //Collision.CheckBoardCollision(ref Arena.data, ref PlayerGuest[i].param, 0.3f);
+            //Collision.CheckBoardCollision(ref Arena.data, ref PlayerGuest[i].param, 0.3f);
         }
 
 
@@ -191,7 +194,8 @@ public class CCoreGame
         Puck.Sound();
         NetHome.Sound();
         NetGuest.Sound();
-        for (int i = 0; i < 1; i++)
+
+        for (int i = 0; i < 5; i++)
         {
             PlayerHome[i].Sound();
            // PlayerGuest[i].Sound();
@@ -205,7 +209,8 @@ public class CCoreGame
         Puck.Post();
         NetHome.Post();
         NetGuest.Post();
-        for (int i = 0; i < 6; i++)
+
+        for (int i = 0; i < 5; i++)
         {
             PlayerHome[i].Post();
             //PlayerGuest[i].Post();
