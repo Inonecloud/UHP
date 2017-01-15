@@ -84,7 +84,7 @@ public class CCoreGame
 
 
 
-
+        Positioning();
 
         //SetupShootout();
     }
@@ -296,6 +296,36 @@ public class CCoreGame
         Puck.param.x = 0;
         Puck.param.y = 0;
 		Puck.param.speed = 0;
+    }
+
+    public void Positioning() {
+        PlayerHome[0].param.x = -5f;
+        PlayerHome[0].param.y = 0;
+        PlayerHome[0].param.h = 90;
+        PlayerHome[0].param.speed = 0;
+
+        PlayerHome[1].param.x = -10f;
+        PlayerHome[1].param.y = 0;
+        PlayerHome[1].param.h = 90;
+        PlayerHome[1].param.speed = 0;
+
+        PlayerHome[2].param.x = -15f;
+        PlayerHome[2].param.y = 0;
+        PlayerHome[2].param.h = 90;
+        PlayerHome[2].param.speed = 0;
+
+        PlayerHome[3].param.x = -8f;
+        PlayerHome[3].param.y = 0;
+        PlayerHome[3].param.h = 90;
+        PlayerHome[3].param.speed = 0;
+
+        PlayerHome[4].param.x = -12f;
+        PlayerHome[4].param.y = 0;
+        PlayerHome[4].param.h = 90;
+        PlayerHome[4].param.speed = 0;
+        // PlayerHome[0].param.dir = 90;
+        //PlayerHome[0].param.tgt_dir = 90;
+
     }
 
 
