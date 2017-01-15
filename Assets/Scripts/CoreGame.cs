@@ -227,7 +227,7 @@ public class CCoreGame
         if (Collision.CheckGoal(NetGuest.param, Puck.param)) goal = -1;
         if (goal == 1) Arena.GoalHome();
         if (goal == -1) Arena.GoalGuest();
-		if (goal != 0)
+		//if (goal != 0)
 			//SetupShootout ();
 
 
