@@ -70,14 +70,17 @@ public class CPlayer
 
         StickObj = Database.LoadGameObject(dbkey, Database.path_equipment + "stick/stick");
         BoneAttach( ref StickObj, PlayerObj, "Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right" );
+        //BoneAttach(ref StickObj,PlayerObj,"mixamorig:Hips/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right");
         StickObj.transform.localEulerAngles = new Vector3(90.0f, 0.0f, -90.0f);
         StickObj.transform.localPosition = new Vector3(0.0f, 0.8f, 0.0f);
         
         GloveLeftObj = Database.LoadGameObject(dbkey, Database.path_equipment + "gloveleft/gloveleft");
         BoneAttach(ref GloveLeftObj, PlayerObj, "Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Left/Player_Shoulder_Left/Player_Forearm_Left/Player_Wrist_Left");
-        
+        //BoneAttach(ref GloveLeftObj,PlayerObj,"mixamorig:Hips/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Left/Player_Shoulder_Left/Player_Forearm_Left/Player_Wrist_Left");
+
         GloveRightObj = Database.LoadGameObject(dbkey, Database.path_equipment + "gloveright/gloveright");
         BoneAttach(ref GloveRightObj, PlayerObj, "Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right");
+        //BoneAttach(ref GloveRightObj,PlayerObj,"mixamorig:Hips/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right");
 
         PlayerAnim = PlayerObj.AddComponent<Animation>();
         //PlayerAnim.clip = Resources.Load("players/animation/humanoididle", typeof(AnimationClip)) as AnimationClip;
@@ -85,13 +88,20 @@ public class CPlayer
         //PlayerAnim.AddClip(Resources.Load("players/animation/Humanoidwalk", typeof(AnimationClip)) as AnimationClip, "walk");
         //PlayerAnim.enabled = true;
 
-
+        
         PlayerObj.transform.Find("Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Left/Player_Shoulder_Left").localEulerAngles = new Vector3(0.0f, -60.0f, 00.0f);
         PlayerObj.transform.Find("Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right").localEulerAngles = new Vector3(0.0f, -70.0f, 20.0f);
         PlayerObj.transform.Find("Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right").localEulerAngles = new Vector3(10.0f, 0.0f, -40.0f);
 
         PlayerHead = PlayerObj.transform.Find("Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Neck/Player_Head");
+        
+        /*
+        PlayerObj.transform.Find("mixamorig:Hips/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Left/Player_Shoulder_Left").localEulerAngles = new Vector3(0.0f,-60.0f,00.0f);
+        PlayerObj.transform.Find("mixamorig:Hips/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right").localEulerAngles = new Vector3(0.0f,-70.0f,20.0f);
+        PlayerObj.transform.Find("mixamorig:Hips/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right").localEulerAngles = new Vector3(10.0f,0.0f,-40.0f);
 
+        PlayerHead = PlayerObj.transform.Find("mixamorig:Hips/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Neck/Player_Head");
+        */
         // init audio sources
         AudioStick = PlayerObj.AddComponent<AudioSource>();
         AudioSkates = PlayerObj.AddComponent<AudioSource>();
