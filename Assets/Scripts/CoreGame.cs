@@ -244,6 +244,14 @@ public class CCoreGame
     }
 
 
+
+
+
+
+
+
+
+
     //=====================================
     // shootout setup
     //=====================================
@@ -290,46 +298,47 @@ public class CCoreGame
 		Puck.param.speed = 0;
     }
 
-    //=================================
-    // start palyers positions
-    //=================================
     public void Positioning() {
-        PlayerHome[0].param.x = -2f;
+        PlayerHome[0].param.x = -5f;
         PlayerHome[0].param.y = 0;
         PlayerHome[0].param.h = 90;
-        PlayerHome[0].param.dir = 90;
-        PlayerHome[0].param.tgt_dir = 90;
+        PlayerHome[0].param.speed = 0;
 
-        PlayerHome[1].param.x = -0.3f;
-        PlayerHome[1].param.y = 5;
+        PlayerHome[1].param.x = -10f;
+        PlayerHome[1].param.y = 0;
         PlayerHome[1].param.h = 90;
-        PlayerHome[1].param.dir = 90;
-        PlayerHome[1].param.tgt_dir = 90;
+        PlayerHome[1].param.speed = 0;
 
-
-        PlayerHome[2].param.x = -0.3f;
-        PlayerHome[2].param.y = -5;
+        PlayerHome[2].param.x = -15f;
+        PlayerHome[2].param.y = 0;
         PlayerHome[2].param.h = 90;
-        PlayerHome[2].param.dir = 90;
-        PlayerHome[2].param.tgt_dir = 90;
+        PlayerHome[2].param.speed = 0;
 
-
-        PlayerHome[3].param.x = -5f;
-        PlayerHome[3].param.y = 3f;
+        PlayerHome[3].param.x = -8f;
+        PlayerHome[3].param.y = 0;
         PlayerHome[3].param.h = 90;
-        PlayerHome[3].param.dir = 90;
-        PlayerHome[3].param.tgt_dir = 90;
+        PlayerHome[3].param.speed = 0;
 
-        PlayerHome[4].param.x = -5f;
-        PlayerHome[4].param.y = -3f;
+        PlayerHome[4].param.x = -12f;
+        PlayerHome[4].param.y = 0;
         PlayerHome[4].param.h = 90;
-        PlayerHome[4].param.dir = 90;
-        PlayerHome[4].param.tgt_dir = 90;
-
+        PlayerHome[4].param.speed = 0;
         // PlayerHome[0].param.dir = 90;
         //PlayerHome[0].param.tgt_dir = 90;
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void OnGUI()
     {
