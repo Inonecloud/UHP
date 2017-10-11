@@ -1,5 +1,5 @@
 Arena Omsk
-јрена ќмск
+arenaomsk
 int
 0.8
 0.5
