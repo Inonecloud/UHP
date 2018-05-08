@@ -24,18 +24,21 @@ public class Database
         string[] lines = text.Split('\n');
 
         D.key=key;
-        D.name = lines[0];
-        D.name_rus = lines[1];
+        D.name = lines[0].Trim();
+        D.name_rus = lines[1].Trim();
+        D.type = lines[2].Trim();
 
-        D.width = float.Parse(lines[2]);
-        D.lenght = float.Parse(lines[3]);
-        D.round = float.Parse(lines[4]);
-        D.board_firm = float.Parse(lines[5]);
-        D.glass_firm = float.Parse(lines[6]);
-        D.net_pos = float.Parse(lines[7]);
+        D.board_firm = float.Parse(lines[3]);
+        D.glass_firm = float.Parse(lines[4]);
+        D.net_pos = float.Parse(lines[5]);
 
 
         // fill dynamic members
+        if( D.type=="int" ){
+            D.width = 29.6f;
+            D.lenght = 59.6f;
+            D.round = 8.7f;
+        }
         D.lenmax = (D.lenght / 2f) - D.round;
         D.lenmin = D.lenmax * (-1);
         D.widmax = (D.width / 2f) - D.round;
@@ -45,8 +48,7 @@ public class Database
     }
 
 
-
-
+    
 
 
 

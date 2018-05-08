@@ -16,10 +16,13 @@ public class Core : MonoBehaviour {
     public const int MODE_GAME_INIT = 1;
     public const int MODE_GAME_PLAY = 2;
 
+	// show soundtrack widget
+	public static bool sountrack_widget_shown = true;
+
     
     CCoreMenu Menu; // main menu class
     CCoreGame Game; // gameplay class
-    
+	CSoundtrack Sountrack; // soundtrack widget
 
 
 	// Use this for initialization
@@ -27,6 +30,9 @@ public class Core : MonoBehaviour {
         mode = MODE_GAME_INIT; // ******** temporary for testing ************
         Menu = new CCoreMenu();
         Game = new CCoreGame();
+
+		if (sountrack_widget_shown)
+			Sountrack = new CSoundtrack ();
     }
 
 
@@ -46,7 +52,8 @@ public class Core : MonoBehaviour {
         // load and process normal gameplay
         if (mode == MODE_GAME_INIT) Game.Init(); 
         if (mode == MODE_GAME_PLAY) Game.Process();
-
+		if (sountrack_widget_shown)
+			Sountrack.Process ();
     }
 
 
@@ -59,8 +66,10 @@ public class Core : MonoBehaviour {
     {
         GUI.skin = skin;
         if (CoreError.Error != "") CoreError.Show(); // show error dialog
-        if (mode == MODE_MAIN_MENU) Menu.OnGUI();
+        //if (mode == MODE_MAIN_MENU) Menu.OnGUI();
         if (mode == MODE_GAME_PLAY) Game.OnGUI();
+		if (sountrack_widget_shown)
+			Sountrack.OnGUI ();
     }
 
 }

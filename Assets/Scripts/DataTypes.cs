@@ -10,12 +10,33 @@ public struct PARAM
     public float dir; // movement direction
     public float speed; // movement speed
     public float vv; // vertical velocity
+    public float tgt_speed, tgt_dir; // target velocities for accelerations
     // rotation
     public float p, b, h; // pitch bank heading
     public float rp, rb, rh; // rotation speeds
     // events
-    public int collision; // collision type
+    public Event object_event; // collision type or sound trigger
 };
+
+
+
+// player actions for legs and hands
+public enum Event
+{
+    NULL,
+    BOARD,
+    BOARD_HIT,
+    GLASS,
+    PUCK_ICE,
+    POLE,
+    NET,
+    PLAYER,
+    STICK_ICE,
+    SNAPSHOT,
+    SLAPSHOT,
+    SKATE_START
+}
+
 
 
 
@@ -30,6 +51,7 @@ public struct DATA_ARENA
     public string name;
     public string name_rus;
 
+    public string type; // standard = int or nhl
     public float width; 
     public float lenght; 
     public float round;
@@ -56,15 +78,72 @@ public struct DATA_EQUIPMENT
 
 
 
+
+
+
+
+
+
+
+
 // player parameters
 public struct DATA_PLAYER
 {
     public string key; // database key
 
+    public Role role; //player role in team 
 
-
+    // player actions
+    public Action legs, hands; // actions for legs and hands
+    public float action_energy; // accumulated energy coefficient for hands action 0.0-1.0
+    public float action_count; // internal counter of action; 
  
 };
+
+
+// player actions for legs and hands
+public enum Action
+{
+    NULL,
+    RUN,
+    RUN_FAST,
+    STOP,
+    STOP_FAST,
+    TURN_LEFT,
+    TURN_LEFT_FAST,
+    TURN_RIGHT,
+    TURN_RIGHT_FAST,
+    PLAY_PUCK,
+    PLAY_PUCK_LEFT,
+    PLAY_PUCK_RIGHT,
+    PLAY_PUCK_FAST,
+    PLAY_PUCK_TRICK,
+    PASS,
+    PASS_ACC,
+    PASS_FAST,
+    PASS_FAST_ACC,
+    SHOT,
+    SHOT_ACC,
+    SHOT_FAST,
+    SHOT_FAST_ACC,
+    SLAP,
+    SLAP_ACC,
+    SLAP_FAST,
+    SLAP_FAST_ACC
+}
+
+//players role
+public enum Role {
+    GOALKEEPER,
+    LEFT_DEFENDER,
+    RIGHT_DEFENDER,
+    LEFT_FOWARD,
+    CNTR_FORWARD,
+    RIGHT_FORWARD,
+    COACH,
+    REFEREE
+}
+
 
 
 
