@@ -45,7 +45,7 @@ public class CCamera
         {
             Camera.main.transform.position = new Vector3(0.0f, 12.0f, -25.0f);
             Camera.main.transform.LookAt(new Vector3(puck.x, 0, -5.0f + puck.y*(Mathf.Abs(puck.x) / 30.0f)));
-            Camera.main.fov = 35.0f - Mathf.Abs(puck.x) * 0.5f;
+            Camera.main.fieldOfView = 35.0f - Mathf.Abs(puck.x) * 0.5f;
         }
 
 
@@ -57,13 +57,13 @@ public class CCamera
         {
             Camera.main.transform.position = new Vector3(arena.net_pos, 20.0f, 0.0f);
             Camera.main.transform.eulerAngles = new Vector3(90.0f, -90.0f, 0.0f);
-            Camera.main.fov = 15.0f;
+            Camera.main.fieldOfView = 15.0f;
         }
         if (type == NET_GUEST)
         {
             Camera.main.transform.position = new Vector3(-arena.net_pos, 20.0f, 0.0f);
             Camera.main.transform.eulerAngles = new Vector3(90.0f, 90.0f, 0.0f);
-            Camera.main.fov = 15.0f;
+            Camera.main.fieldOfView = 15.0f;
         }
         if (type == GOAL_HOME)
         {
@@ -71,7 +71,7 @@ public class CCamera
             float y = net_home.y - 0.6f * Mathf.Cos(Mathf.Deg2Rad * net_home.h);
             Camera.main.transform.position = new Vector3( x, 0.9f, y );
             Camera.main.transform.eulerAngles = new Vector3(20.0f, net_home.h, 0.0f);
-            Camera.main.fov = 90.0f;
+            Camera.main.fieldOfView = 90.0f;
         }
         if (type == GOAL_HOME)
         {
@@ -95,7 +95,7 @@ public class CCamera
             Physics.protect( ref pitch, -40f, 40f);
             Camera.main.transform.position = new Vector3(x, 0.9f, y);
             Camera.main.transform.eulerAngles = new Vector3(20.0f + pitch, net_home.h + dir, 0.0f);
-            Camera.main.fov = 90.0f;
+            Camera.main.fieldOfView = 90.0f;
         }
         if (type == GOAL_GUEST)
         {
@@ -119,7 +119,7 @@ public class CCamera
             Physics.protect(ref pitch, -40f, 40f);
             Camera.main.transform.position = new Vector3(x, 0.9f, y);
             Camera.main.transform.eulerAngles = new Vector3(20.0f + pitch, net_guest.h + dir, 0.0f);
-            Camera.main.fov = 90.0f;
+            Camera.main.fieldOfView = 90.0f;
         }
 
 
@@ -130,7 +130,7 @@ public class CCamera
         {
             Camera.main.transform.position = new Vector3(user_head.position.x-5.0f,user_head.position.y+5.0f,user_head.position.z);
             Camera.main.transform.eulerAngles = new Vector3(40.0f, 90.0f, 0.0f);
-            Camera.main.fov = 60.0f;
+            Camera.main.fieldOfView = 60.0f;
         }
 
         if (type == PLAY_FOLLOW)
@@ -141,7 +141,7 @@ public class CCamera
             Physics.smooth(ref dir, d, 0.01f*Time.deltaTime);
             Camera.main.transform.position = new Vector3(cx, user_head.position.y + 5.0f, cz);
             Camera.main.transform.eulerAngles = new Vector3(40.0f, dir, 0.0f);
-            Camera.main.fov = 60.0f;
+            Camera.main.fieldOfView = 60.0f;
         }
 
         if (type == POV)
@@ -152,7 +152,7 @@ public class CCamera
             Physics.smooth(ref dir, d, 1.0f * Time.deltaTime);
             Camera.main.transform.position = new Vector3(user_head.position.x, user_head.position.y + 0.03f, user_head.position.z);
             Camera.main.transform.eulerAngles = new Vector3(30f, user_head.eulerAngles.y+90.0f+dir, 0f);
-            Camera.main.fov = 80.0f;
+            Camera.main.fieldOfView = 80.0f;
         }
 
 
