@@ -2,11 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 
-
-
 public class CPlayer
 {
-
 
     // global objects
     public GameObject PlayerObj;
@@ -65,21 +62,23 @@ public class CPlayer
     {
         data = Database.LoadPlayer(dbkey);
 
-        PlayerObj = Database.LoadGameObject(dbkey, Database.path_player + dbkey + "/player");
-
+        PlayerObj = Database.LoadGameObject(dbkey, Database.path_player + dbkey + "/polevoy");
 
         StickObj = Database.LoadGameObject(dbkey, Database.path_equipment + "stick/stick");
-        BoneAttach( ref StickObj, PlayerObj, "Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right" );
+     //   BoneAttach( ref StickObj, PlayerObj, "Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right" );
         //BoneAttach(ref StickObj,PlayerObj,"mixamorig:Hips/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right");
+       
+        //Path to right hand
+        // BoneAttach(ref StickObj,PlayerObj,"PolevoyNEW:Polevoy_rigging/PolevoyNEW:Main/PolevoyNEW:DeformationSystem/PolevoyNEW:Root_M/PolevoyNEW:RootPart1_M/PolevoyNEW:RootPart2_M/PolevoyNEW:Spine1_M/PolevoyNEW:Spine1Part1_M/PolevoyNEW:Spine1Part2_M/PolevoyNEW:Chest_M/PolevoyNEW:Scapula_R/PolevoyNEW:Shoulder_R/PolevoyNEW:ShoulderPart1_R/PolevoyNEW:ShoulderPart2_R/PolevoyNEW:ElbownPart1_R");
         StickObj.transform.localEulerAngles = new Vector3(90.0f, 0.0f, -90.0f);
         StickObj.transform.localPosition = new Vector3(0.0f, 0.8f, 0.0f);
         
-        GloveLeftObj = Database.LoadGameObject(dbkey, Database.path_equipment + "gloveleft/gloveleft");
-        BoneAttach(ref GloveLeftObj, PlayerObj, "Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Left/Player_Shoulder_Left/Player_Forearm_Left/Player_Wrist_Left");
+       // GloveLeftObj = Database.LoadGameObject(dbkey, Database.path_equipment + "gloveleft/gloveleft");
+      //  BoneAttach(ref GloveLeftObj, PlayerObj, "Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Left/Player_Shoulder_Left/Player_Forearm_Left/Player_Wrist_Left");
         //BoneAttach(ref GloveLeftObj,PlayerObj,"mixamorig:Hips/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Left/Player_Shoulder_Left/Player_Forearm_Left/Player_Wrist_Left");
 
-        GloveRightObj = Database.LoadGameObject(dbkey, Database.path_equipment + "gloveright/gloveright");
-        BoneAttach(ref GloveRightObj, PlayerObj, "Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right");
+      //  GloveRightObj = Database.LoadGameObject(dbkey, Database.path_equipment + "gloveright/gloveright");
+    //    BoneAttach(ref GloveRightObj, PlayerObj, "Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right");
         //BoneAttach(ref GloveRightObj,PlayerObj,"mixamorig:Hips/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right");
 
         PlayerAnim = PlayerObj.AddComponent<Animation>();
@@ -89,11 +88,13 @@ public class CPlayer
         //PlayerAnim.enabled = true;
 
         
-        PlayerObj.transform.Find("Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Left/Player_Shoulder_Left").localEulerAngles = new Vector3(0.0f, -60.0f, 00.0f);
-        PlayerObj.transform.Find("Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right").localEulerAngles = new Vector3(0.0f, -70.0f, 20.0f);
-        PlayerObj.transform.Find("Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right").localEulerAngles = new Vector3(10.0f, 0.0f, -40.0f);
+        
+      //  PlayerObj.transform.Find("Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Left/Player_Shoulder_Left").localEulerAngles = new Vector3(0.0f, -60.0f, 00.0f);
+       // PlayerObj.transform.Find("Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right").localEulerAngles = new Vector3(0.0f, -70.0f, 20.0f);
+        //PlayerObj.transform.Find("Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Right/Player_Shoulder_Right/Player_Forearm_Right/Player_Wrist_Right").localEulerAngles = new Vector3(10.0f, 0.0f, -40.0f);
 
-        PlayerHead = PlayerObj.transform.Find("Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Neck/Player_Head");
+       // PlayerHead = PlayerObj.transform.Find("Player_Pelvis/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Neck/Player_Head");
+        PlayerHead = PlayerObj.transform.Find("PolevoyNEW:Polevoy_rigging/PolevoyNEW:Main/PolevoyNEW:FitSkeleton/PolevoyNEW:Root/PolevoyNEW:Spine1/PolevoyNEW:Chest/PolevoyNEW:Neck/PolevoyNEW:Head");
         
         /*
         PlayerObj.transform.Find("mixamorig:Hips/Player_Spine_01/Player_Spine02/Player_Spine03/Player_Clav_Left/Player_Shoulder_Left").localEulerAngles = new Vector3(0.0f,-60.0f,00.0f);
