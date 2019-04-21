@@ -254,7 +254,27 @@ ModelImporter:
     13700038: PolevoyNEW:Polevoy_teethLower
     13700040: PolevoyNEW:Polevoy_teethUpper
     13700042: PolevoyNEW:Polevoy_tongue
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PolevoyNEW_anisotropic2
+    second: {fileID: 2100000, guid: 11ab6d4535bec554abad1489b5c7a985, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PolevoyNEW_blinn6
+    second: {fileID: 2100000, guid: 412c9228fe74f704086feb6adb73eb99, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PolevoyNEW_lambert8
+    second: {fileID: 2100000, guid: 6d69b84b85ac2374a96588ddad5f8dfb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PolevoyNEW_phongE2
+    second: {fileID: 2100000, guid: dac50b2ec84905444af6dbd472bad028, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
